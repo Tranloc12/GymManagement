@@ -1,0 +1,172 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Trang chủ</title>
+    <th:block th:replace="base :: styles"></th:block>
+</head>
+
+<body>
+    <div th:replace="base :: header"></div>
+
+    <main class="container">
+        <!-- Admin Dashboard -->
+        <div th:if="${currentUser != null and currentUser.userRole == 'ROLE_ADMIN'}" class="admin-dashboard">
+            <div
+                class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Admin Dashboard</h1>
+<!--                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group me-2">
+                        <a href="/GymManagementApp/admin/reports" class="btn btn-sm btn-outline-primary">
+                            <i class="fas fa-chart-bar"></i> Báo cáo thống kê
+                        </a>
+                    </div>
+                </div>-->
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="row mb-4">
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-primary h-100 py-2" style="border-left: 4px solid #4e73df;">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                        Tổng người dùng
+                                    </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${totalUsers}">0</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-users fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-success h-100 py-2" style="border-left: 4px solid #1cc88a;">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                        Hội viên
+                                    </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${totalMembers}">0
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-user-friends fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-info h-100 py-2" style="border-left: 4px solid #36b9cc;">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                        Huấn luyện viên
+                                    </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${totalTrainers}">0
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-user-tie fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-warning h-100 py-2" style="border-left: 4px solid #f6c23e;">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                        Quản lý
+                                    </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${totalManagers}">0
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-user-tie fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Users Table -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Danh sách người dùng</h6>
+                    <div class="dropdown no-arrow">
+                        <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow">
+                            <div class="dropdown-header">Hành động:</div>
+                            <a class="dropdown-item" href="/GymManagementApp/users">Thêm người dùng</a>
+<!--                            <a class="dropdown-item" href="/GymManagementApp/trainers">Danh sách trainers</a>
+                            <a class="dropdown-item" href="/GymManagementApp/members">Danh sách members</a>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" width="100%" cellspacing="0">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>Vai trò</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="user : ${users}">
+                                    <td th:text="${user.id}"></td>
+                                    <td th:text="${user.username}"></td>
+                                    <td th:text="${user.email}"></td>
+                                    <td>
+                                        <span th:if="${user.userRole == 'ROLE_ADMIN'}" class="badge bg-danger">Quản trị
+                                            viên</span>
+                                        <span th:if="${user.userRole == 'ROLE_MANAGER'}" class="badge bg-warning">Quản
+                                            lý</span>
+                                        <span th:if="${user.userRole == 'ROLE_TRAINER'}" class="badge bg-info">Huấn
+                                            luyện viên</span>
+                                        <span th:if="${user.userRole == 'ROLE_MEMBER'}" class="badge bg-success">Hội
+                                            viên</span>
+                                    </td>
+                                    <td>
+                                        <span th:if="${user.isActive}" class="badge bg-success">Hoạt động</span>
+                                        <span th:unless="${user.isActive}" class="badge bg-secondary">Không hoạt
+                                            động</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Regular user content -->
+        <div th:unless="${currentUser != null and currentUser.userRole == 'ROLE_ADMIN'}">
+            <h1>Chào!</h1>
+        </div>
+    </main>
+
+    <div th:replace="base :: footer"></div>
+
+    <script th:src="@{/js/main.js}"></script>
+</body>
+
+</html>

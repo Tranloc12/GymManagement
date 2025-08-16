@@ -1,0 +1,101 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Đăng ký thành viên Gym</title>
+    <th:block th:replace="base :: styles"></th:block>
+</head>
+<body>
+    <div th:replace="base :: header"></div>
+    <div class="container mt-5" style="max-width: 600px;">
+        <h1 class="text-center text-primary mb-4">ĐĂNG KÝ THÀNH VIÊN GYM</h1>
+
+        <form method="post" th:action="@{/add-user}" th:object="${user}" enctype="multipart/form-data" class="border p-4 rounded shadow">
+            <div th:if="${successMessage}" class="alert alert-success alert-dismissible">
+                <span th:text="${successMessage}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible">
+                <span th:text="${errorMessage}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            <!-- Username -->
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" 
+                       th:field="*{username}" 
+                       id="username" 
+                       placeholder="Tên đăng nhập"/>
+                <label for="username">Tên đăng nhập</label>
+                <small class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></small>
+            </div>
+
+            <!-- Email -->
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" 
+                       th:field="*{email}" 
+                       id="email" 
+                       placeholder="Địa chỉ email"/>
+                <label for="email">Địa chỉ email</label>
+                <small class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+            </div>
+
+            <!-- Password -->
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control" 
+                       th:field="*{password}" 
+                       id="password" 
+                       placeholder="Mật khẩu"/>
+                <label for="password">Mật khẩu</label>
+                <small class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></small>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control" 
+                       th:field="*{confirmPassword}" 
+                       id="confirmPassword" 
+                       placeholder="Xác nhận mật khẩu"/>
+                <label for="confirmPassword">Xác nhận mật khẩu</label>
+                <small class="text-danger" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></small>
+            </div>
+
+            <!-- Date of Birth -->
+            <div class="form-floating mb-3">
+                <input type="date" class="form-control" 
+                       th:field="*{dob}" 
+                       id="dob"/>
+                <label for="dob">Ngày sinh</label>
+                <small class="text-danger" th:if="${#fields.hasErrors('dob')}" th:errors="*{dob}"></small>
+            </div>
+
+            <!-- Role (Single selection) -->
+            <div class="mb-3">
+                <label class="form-label">Vai trò</label>
+                <div class="d-flex gap-3"> <!-- Thêm container flex để căn chỉnh khoảng cách -->
+                    <div class="form-check form-check-inline"> <!-- Thêm lớp form-check-inline -->
+                        <input class="form-check-input" 
+                               type="radio" 
+                               th:field="*{userRole}" 
+                               value="ROLE_MANAGER" 
+                               id="managerRole">
+                        <label class="form-check-label" for="managerRole">Quản lý</label>
+                    </div>
+                    <div class="form-check form-check-inline"> <!-- Thêm lớp form-check-inline -->
+                        <input class="form-check-input" 
+                               type="radio" 
+                               th:field="*{userRole}" 
+                               value="ROLE_TRAINER" 
+                               id="ptRole">
+                        <label class="form-check-label" for="ptRole">Huấn luyện viên</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->  
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-lg">Đăng ký</button>
+            </div>
+        </form>
+    </div>
+    <div th:replace="base :: footer"></div>
+</body>
+</html>
