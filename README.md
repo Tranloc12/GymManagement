@@ -1,4 +1,4 @@
-# GymMangement
+# GymManagement
 
 Xây dựng hệ thống quản lý phòng gym cho phép quản lý hội viên, gói tập, huấn luyện viên và lịch tập.
 
